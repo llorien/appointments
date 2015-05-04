@@ -1,0 +1,28 @@
+{
+  "name": "brithon.com",
+  "version": "1.0.0",
+  "description": "brithon.com based on multisite wordpress.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/birchpress/brithon.com.git"
+  },
+  "author": "Brithon Inc.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/birchpress/brithon.com/issues"
+  },
+  "homepage": "https://github.com/birchpress/brithon.com",
+  "devDependencies": {
+    "del": "^1.1.1",
+    "gulp": "^3.8.11",
+    "gulp-load-plugins": "^0.10.0",
+    "gulp-util": "^3.0.4",
+    "gulp-zip": "^3.0.2",
+    "lodash": "^3.8.0",
+    "shelljs": "^0.4.0"
+  }
+}
