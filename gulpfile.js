@@ -189,18 +189,16 @@ function refactorVersion() {
 }
 
 function populateConfig() {
-    taskConfig.dirs.buildDir = bases.repo;
-    
     switch (taskConfig.versionType) {
     case VERSION_TYPE.DEV:
-        var res = getVersionInfo(taskConfig.dirs.buildDir);
+        var res = getVersionInfo(bases.repo);
         taskConfig.productVersion = [res[0],
                                      res[1],
                                      'DEV',
                                      gPlugins.util.date('yyyymmdd')].join('.');
         break;
     case VERSION_TYPE.BRANCH:
-        var res = getVersionInfo(taskConfig.dirs.buildDir, taskConfig.version);
+        var res = getVersionInfo(bases.repo, taskConfig.version);
         taskConfig.productVersion = [res[0],
                                      res[1],
                                      gPlugins.util.date('yyyymmdd')].join('.');
@@ -212,16 +210,21 @@ function populateConfig() {
         break;
     }
 
-    taskConfig.dirs.releaseDir = path.join(taskConfig.dirs.releaseRoot,
-                                           [taskConfig.productCode,
-                                            taskConfig.productVersion].join('-'));
+    taskConfig.releaseName = [taskConfig.productCode, taskConfig.productVersion].join('-');
+    taskConfig.zipName = [taskConfig.releaseName, 'zip'].join('.');
+    taskConfig.dirs.releaseDir = path.join(taskConfig.dirs.releaseRoot, taskConfig.releaseName);
+
+    if (taskConfig.versionType === VERSION_TYPE.DEV) {
+        taskConfig.dirs.buildDir = bases.repo;
+    } else {
+        taskConfig.dirs.buildDir = path.join(taskConfig.dirs.buildRoot,
+                                             [taskConfig.productCode,
+                                              normalizeVersion(taskConfig.version)].join('@'));
+    }
 };
 
 function checkoutCode() {
     if (taskConfig.versionType !== VERSION_TYPE.DEV) {
-        taskConfig.dirs.buildDir = path.join(taskConfig.dirs.buildRoot,
-                                             [taskConfig.productCode,
-                                              normalizeVersion(taskConfig.version)].join('@'));
         checkoutRev(bases.repo, taskConfig.version, taskConfig.dirs.buildDir);
     }
 }
@@ -233,8 +236,10 @@ gulp.task('initialize', ['sanitycheck'], function() {
 });
 
 gulp.task('clean:current', ['initialize'], function() {
-    del.sync([taskConfig.dirs.releaseDir,
-              taskConfig.dirs.buildDir]);
+    del.sync([taskConfig.dirs.releaseDir]);
+    if (taskConfig.versionType !== VERSION_TYPE.DEV) {
+        del.sync([taskConfig.dirs.buildDir]);
+    }
 });
 
 gulp.task('checkout', ['clean:current'], function() {
@@ -260,8 +265,6 @@ gulp.task('copy:wp-overridden', ['copy:wp'], function() {
 });
 
 gulp.task('zip', ['copy:wp-overridden'], function() {
-    taskConfig.zipName = [path.basename(taskConfig.dirs.releaseDir), 'zip'].join('.');
-    
     return gulp.src('**/*',
                     {cwd: taskConfig.dirs.releaseDir})
         .pipe(gPlugins.zip(taskConfig.zipName))
@@ -275,9 +278,9 @@ gulp.task('build', ['zip'], function() {
 });
           
 gulp.task('deploy', ['build'], function() {
-    var isDeployed = shellWrapper('(cd <%= releaseDir %>; eb deploy -l <%= versionLabel %>)',
+    var isDeployed = shellWrapper('(cd <%= releaseDir %> && eb deploy -l <%= versionLabel %>)',
                                   {releaseDir: taskConfig.dirs.releaseDir,
-                                   versionLabel: taskConfig.version});
+                                   versionLabel: taskConfig.releaseName});
 
     if (isDeployed === 0) {
         gPlugins.util.log('Deploy succeeded.');
