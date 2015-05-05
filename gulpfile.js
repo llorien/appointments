@@ -162,7 +162,7 @@ function checkoutRev(repo, revision, target) {
 
 function refactorVersion() {
     var versionType = getVersionType(taskConfig.version, bases.repo);
-    
+
     if (versionType === VERSION_TYPE.UNKNOWN) {
         gPlugins.util.log(gPlugins.util.colors.red('[Error]',
                                                    'unknown version (tag or branch required):',
@@ -247,26 +247,24 @@ gulp.task('checkout', ['clean:current'], function() {
 });
 
 gulp.task('copy:wp', ['checkout'], function() {
-    return gulp.src(['**/*',
-                     '!dist{,/**}',
-                     '!.git{,/**}',
-                     '!.gitignore',
-                     '!node_modules{,/**}',
-                     '!gulpfile.js',
-                     '!package.json'],
+    return gulp.src('wp/**/*',
                     {cwd: taskConfig.dirs.buildDir})
         .pipe(gulp.dest(taskConfig.dirs.releaseDir));
 });
 
 gulp.task('copy:wp-overridden', ['copy:wp'], function() {
-    return gulp.src('wp-overridden/' + taskConfig.env + '/**/*',
-                    {cwd: taskConfig.dirs.buildDir})
+    var root = path.join('wp-overridden', taskConfig.env);
+
+    return gulp.src(root + '/**/*',
+                    {cwd: taskConfig.dirs.buildDir,
+                     dot: true})
         .pipe(gulp.dest(taskConfig.dirs.releaseDir));
 });
 
 gulp.task('zip', ['copy:wp-overridden'], function() {
     return gulp.src('**/*',
-                    {cwd: taskConfig.dirs.releaseDir})
+                    {cwd: taskConfig.dirs.releaseDir,
+                     dot: true})
         .pipe(gPlugins.zip(taskConfig.zipName))
         .pipe(gulp.dest(taskConfig.dirs.zipRoot));
 });
