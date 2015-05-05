@@ -143,7 +143,7 @@ function getVersionInfo(repo, version) {
         process.exit(1);
     }
 
-    return [normalizeVersion(branch.output.trim()), sha1.output.trim()];
+    return [branch.output.trim(), sha1.output.trim()];
 };
 
 function checkoutRev(repo, revision, target) {
@@ -189,37 +189,39 @@ function refactorVersion() {
 }
 
 function populateConfig() {
+    var res = null;
+
     switch (taskConfig.versionType) {
     case VERSION_TYPE.DEV:
-        var res = getVersionInfo(bases.repo);
-        taskConfig.productVersion = [res[0],
-                                     res[1],
-                                     'DEV',
-                                     gPlugins.util.date('yyyymmdd')].join('.');
+        res = getVersionInfo(bases.repo);
+        taskConfig.normalizedVersion = [res[0],
+                                        res[1],
+                                        'DEV',
+                                        gPlugins.util.date('yyyymmdd')].join('.');
         break;
     case VERSION_TYPE.BRANCH:
-        var res = getVersionInfo(bases.repo, taskConfig.version);
-        taskConfig.productVersion = [res[0],
-                                     res[1],
-                                     gPlugins.util.date('yyyymmdd')].join('.');
+        res = getVersionInfo(bases.repo, taskConfig.version);
+        taskConfig.normalizedVersion = [res[0],
+                                        res[1],
+                                        gPlugins.util.date('yyyymmdd')].join('.');
         break;
     case VERSION_TYPE.TAG:
-        taskConfig.productVersion = taskConfig.version;
+        taskConfig.normalizedVersion = taskConfig.version;
         break;
     default:
         break;
     }
 
-    taskConfig.releaseName = [taskConfig.productCode, taskConfig.productVersion].join('-');
-    taskConfig.zipName = [taskConfig.releaseName, 'zip'].join('.');
-    taskConfig.dirs.releaseDir = path.join(taskConfig.dirs.releaseRoot, taskConfig.releaseName);
+    taskConfig.normalizedVersion = normalizeVersion(taskConfig.normalizedVersion);
 
+    taskConfig.releaseName = [taskConfig.productCode, taskConfig.normalizedVersion].join('-');
+    taskConfig.zipName = [taskConfig.releaseName, 'zip'].join('.');
+
+    taskConfig.dirs.releaseDir = path.join(taskConfig.dirs.releaseRoot, taskConfig.releaseName);
     if (taskConfig.versionType === VERSION_TYPE.DEV) {
         taskConfig.dirs.buildDir = bases.repo;
     } else {
-        taskConfig.dirs.buildDir = path.join(taskConfig.dirs.buildRoot,
-                                             [taskConfig.productCode,
-                                              normalizeVersion(taskConfig.version)].join('@'));
+        taskConfig.dirs.buildDir = path.join(taskConfig.dirs.buildRoot, taskConfig.releaseName);
     }
 };
 
@@ -272,7 +274,7 @@ gulp.task('zip', ['copy:wp-overridden'], function() {
 gulp.task('build', ['zip'], function() {
     gPlugins.util.log('release package:', taskConfig.dirs.releaseDir);
     gPlugins.util.log('release zip:    ', path.join(taskConfig.dirs.zipRoot,
-                                                     taskConfig.zipName));
+                                                    taskConfig.zipName));
 });
           
 gulp.task('deploy', ['build'], function() {
