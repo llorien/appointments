@@ -282,7 +282,7 @@ gulp.task('deploy', ['build'], function() {
                                   {releaseDir: taskConfig.dirs.releaseDir,
                                    versionLabel: taskConfig.releaseName});
 
-    if (isDeployed === 0) {
+    if (isDeployed.code === 0) {
         gPlugins.util.log('Deploy succeeded.');
     } else {
         gPlugins.util.log('Deploy failed.');
