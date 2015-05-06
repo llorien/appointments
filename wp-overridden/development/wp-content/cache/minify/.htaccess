@@ -1,0 +1,9 @@
+# BEGIN W3TC Minify core
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /wp-content/cache/minify/
+    RewriteRule /w3tc_rewrite_test$ ../../plugins/w3-total-cache/pub/minify.php?w3tc_rewrite_test=1 [L]
+    RewriteRule ^(.+/[X]+\.css)$ ../../plugins/w3-total-cache/pub/minify.php?test_file=$1 [L]
+    RewriteRule ^(.+\.(css|js))$ ../../plugins/w3-total-cache/pub/minify.php?file=$1 [L]
+</IfModule>
+# END W3TC Minify core
