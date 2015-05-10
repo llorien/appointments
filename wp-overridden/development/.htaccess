@@ -153,13 +153,6 @@
     </IfModule>
 </FilesMatch>
 # END W3TC Browser Cache
-# BEGIN W3TC Minify cache
-<IfModule mod_rewrite.c> 
-    RewriteEngine On
-    RewriteBase /
-    RewriteRule ^[_0-9a-zA-Z-]+/wp-content/cache/minify/[0-9]+/w3tc_rewrite_test$ /wp-content/plugins/w3-total-cache/pub/minify.php?w3tc_rewrite_test=1 [L]
-</IfModule>
-# END W3TC Minify cache
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
 # new config after multisite
