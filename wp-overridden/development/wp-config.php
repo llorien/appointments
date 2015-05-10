@@ -2,7 +2,6 @@
 /** Enable W3 Total Cache */
 define('WP_CACHE', true); // Added by W3 Total Cache
 
-
 /**
  * The base configurations of the WordPress.
  *
@@ -17,6 +16,9 @@ define('WP_CACHE', true); // Added by W3 Total Cache
  *
  * @package WordPress
  */
+
+/** Disable automatic update */
+define('AUTOMATIC_UPDATER_DISABLED', true);
 
 /** Detect if SSL is used. This is required since we are
 	terminating SSL either on CloudFront or on ELB */
