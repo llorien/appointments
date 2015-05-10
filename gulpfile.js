@@ -249,16 +249,19 @@ gulp.task('checkout', ['clean:current'], function() {
 });
 
 gulp.task('copy:wp', ['checkout'], function() {
-    return gulp.src('wp/**/*',
-                    {cwd: taskConfig.dirs.buildDir})
+    var srcRoot = path.join(taskConfig.dirs.buildDir, 'wp');
+
+    return gulp.src('**/*',
+                    {cwd: srcRoot})
         .pipe(gulp.dest(taskConfig.dirs.releaseDir));
 });
 
 gulp.task('copy:wp-overridden', ['copy:wp'], function() {
-    var root = path.join('wp-overridden', taskConfig.env);
+    var srcRoot = path.join(taskConfig.dirs.buildDir, 'wp-overridden', taskConfig.env);
 
-    return gulp.src(root + '/**/*',
-                    {cwd: taskConfig.dirs.buildDir,
+    return gulp.src(['**/*',
+                     '!exports{,/**}'],
+                    {cwd: srcRoot,
                      dot: true})
         .pipe(gulp.dest(taskConfig.dirs.releaseDir));
 });
