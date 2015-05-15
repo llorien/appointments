@@ -295,7 +295,7 @@ gulp.task('deploy', ['build'], function() {
 });
 
 /**
-   Hierarachy of build directories.
+   Hierarchy of build directories.
    Corresponding varabile names are listed after #.
 
 brithon.com/ # pwd, bases.repo
