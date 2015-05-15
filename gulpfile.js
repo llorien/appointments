@@ -61,7 +61,7 @@ function isVersioninRepo(version, repo) {
     var res = shellWrapper('git -C <%= repo %> show-ref <%= ref %>',
                                   {repo: repo,
                                    ref: version});
-    return (0 == res.code);
+    return (res.code === 0);
 }
 
 var VERSION_TYPE = {
@@ -99,7 +99,7 @@ gulp.task('sanitycheck', function() {
         version: (gPlugins.util.env.version || 'dev').toString().toLowerCase()
     });
 
-    if (! _.includes(environments, taskConfig.env)) {
+    if (!(_.includes(environments, taskConfig.env))) {
         gPlugins.util.log(gPlugins.util.colors.red('[Error]',
                                                    'unknown env:',
                                                    taskConfig.env));
@@ -119,7 +119,7 @@ gulp.task('sanitycheck', function() {
 });
 
 function getVersionInfo(repo, version) {
-    version = (typeof version !== 'undefined') ?  version : 'HEAD';
+    version = (typeof version !== 'undefined') ? version : 'HEAD';
 
     // get SHA1
     var sha1 = shellWrapper('git -C <%= repo %> rev-parse --short=7 <%= version %>',
@@ -144,7 +144,7 @@ function getVersionInfo(repo, version) {
     }
 
     return [branch.output.trim(), sha1.output.trim()];
-};
+}
 
 function checkoutRev(repo, revision, target) {
     // populate the revision to build dir.
@@ -223,7 +223,7 @@ function populateConfig() {
     } else {
         taskConfig.dirs.buildDir = path.join(taskConfig.dirs.buildRoot, taskConfig.releaseName);
     }
-};
+}
 
 function checkoutCode() {
     if (taskConfig.versionType !== VERSION_TYPE.DEV) {
@@ -279,7 +279,7 @@ gulp.task('build', ['zip'], function() {
     gPlugins.util.log('release zip:    ', path.join(taskConfig.dirs.zipRoot,
                                                     taskConfig.zipName));
 });
-          
+
 gulp.task('deploy', ['build'], function() {
     var isDeployed = shellWrapper('(cd <%= releaseDir %> && eb deploy -l <%= versionLabel %>)',
                                   {releaseDir: taskConfig.dirs.releaseDir,
@@ -294,7 +294,7 @@ gulp.task('deploy', ['build'], function() {
     }
 });
 
-/*
+/**
    Hierarachy of build directories.
    Corresponding varabile names are listed after #.
 
@@ -303,9 +303,9 @@ brithon.com/ # pwd, bases.repo
 |-- package.json
 `-- dist/    # bases.dist
     |-- zip/ # zipRoot
-    |   `-- brithon.com-X.Y.Z.zip 
+    |   `-- brithon.com-X.Y.Z.zip
     |-- release/ # releaseRoot
-    |   `-- brithon.com-X.Y.Z/ # releaseDir 
+    |   `-- brithon.com-X.Y.Z/ # releaseDir
     `-- build/ # buildRoot
         `-- brithon.com@X.Y.Z/ # buildDir
 */
