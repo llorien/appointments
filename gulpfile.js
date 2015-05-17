@@ -307,5 +307,5 @@ brithon.com/ # pwd, bases.repo
     |-- release/ # releaseRoot
     |   `-- brithon.com-X.Y.Z/ # releaseDir
     `-- build/ # buildRoot
-        `-- brithon.com@X.Y.Z/ # buildDir
+        `-- brithon.com-X.Y.Z/ # buildDir
 */
