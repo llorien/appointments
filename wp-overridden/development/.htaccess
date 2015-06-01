@@ -155,8 +155,17 @@
 # END W3TC Browser Cache
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
-# new config after multisite
+# redirect http to https behind elb
 RewriteEngine On
+# Bypass ELB-Healthchecker from redirection.
+RewriteCond %{HTTP_USER_AGENT} !^ELB-HealthChecker
+# By using HTTP:X-Forwarded-Proto does not contains HTTPS
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+#Request forward option
+RewriteRule !/readme.html https://%{SERVER_NAME}%{REQUEST_URI} [END,R=301]
+
+# new config after multisite
+# RewriteEngine On
 RewriteBase /
 RewriteRule ^index\.php$ - [L]
 
