@@ -197,13 +197,13 @@ function populateConfig() {
         taskConfig.normalizedVersion = [res[0],
                                         res[1],
                                         'DEV',
-                                        gPlugins.util.date('yyyymmdd')].join('.');
+                                        gPlugins.util.date("UTC:yyyymmdd'T'HHMMss'Z'")].join('.');
         break;
     case VERSION_TYPE.BRANCH:
         res = getVersionInfo(bases.repo, taskConfig.version);
         taskConfig.normalizedVersion = [res[0],
                                         res[1],
-                                        gPlugins.util.date('yyyymmdd')].join('.');
+                                        gPlugins.util.date("UTC:yyyymmdd'T'HHMMss'Z'")].join('.');
         break;
     case VERSION_TYPE.TAG:
         taskConfig.normalizedVersion = taskConfig.version;
@@ -252,7 +252,8 @@ gulp.task('copy:wp', ['checkout'], function() {
     var srcRoot = path.join(taskConfig.dirs.buildDir, 'wp');
 
     return gulp.src('**/*',
-                    {cwd: srcRoot})
+                    {cwd: srcRoot,
+                     dot: true})
         .pipe(gulp.dest(taskConfig.dirs.releaseDir));
 });
 
@@ -281,7 +282,7 @@ gulp.task('build', ['zip'], function() {
 });
 
 gulp.task('deploy', ['build'], function() {
-    var isDeployed = shellWrapper('(cd <%= releaseDir %> && eb deploy -l <%= versionLabel %>)',
+    var isDeployed = shellWrapper('(cd <%= releaseDir %> && eb deploy --profile brithon -l <%= versionLabel %>)',
                                   {releaseDir: taskConfig.dirs.releaseDir,
                                    versionLabel: taskConfig.releaseName});
 
