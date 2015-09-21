@@ -1,27 +1,27 @@
 {
-  "name": "brithon.com",
-  "version": "1.0.0",
-  "description": "brithon.com based on multisite wordpress.",
+  "name": "appointments.brithon.com",
+  "version": "0.0.1",
+  "description": "appointments.brithon.com based on multisite wordpress.",
   "main": "index.js",
   "scripts": {
+    "build": "gulp build",
     "deploy": "gulp deploy"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/birchpress/brithon.com.git"
+    "url": "https://github.com/birchpress/appointments.brithon.com.git"
   },
   "author": "Brithon Inc.",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/birchpress/brithon.com/issues"
+    "url": "https://github.com/birchpress/appointments.brithon.com/issues"
   },
-  "homepage": "https://github.com/birchpress/brithon.com",
+  "homepage": "https://github.com/birchpress/appointments.brithon.com",
   "devDependencies": {
     "del": "^2.0.0",
     "gulp": "^3.9.0",
     "gulp-load-plugins": "^1.0.0-rc.1",
     "gulp-util": "^3.0.6",
-    "gulp-zip": "^3.0.2",
     "lodash": "^3.10.1",
     "shelljs": "^0.5.3"
   }
