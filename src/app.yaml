@@ -1,0 +1,70 @@
+application: brithon-appointments
+version: v0-0-2
+runtime: php55
+api_version: 1
+
+handlers:
+- url: /wp-admin/network/(.+)
+  script: wordpress/wp-admin/network/\1
+  secure: always
+
+- url: /wp-admin/network/
+  script: wordpress/wp-admin/network/index.php
+  secure: always
+  
+- url: /([_0-9a-zA-Z-]+/)?(wp-(content|admin|includes).*\.(htm.*$|html.*$|css.*$|js.*$|ico.*$|jpg.*$|png.*$|gif.*$))
+  static_files: wordpress/\2
+  upload: wordpress/([_0-9a-zA-Z-]+/)?(wp-(content|admin|includes).*\.(htm.*$|html.*$|css.*$|js.*$|ico.*$|jpg.*$|png.*$|gif.*$))
+  application_readable: true
+
+- url: /(.*\.(htm|html|css|js))$
+  static_files: wordpress/\1
+  upload: wordpress/.*\.(htm|html|css|js)$
+  application_readable: true
+
+- url: /wp-content/(.*\.(ico|jpg|jpeg|png|gif|woff|ttf|otf|eot|svg))$
+  static_files: wordpress/wp-content/\1
+  upload: wordpress/wp-content/.*\.(ico|jpg|jpeg|png|gif|woff|ttf|otf|eot|svg)$
+  application_readable: true
+
+- url: /(.*\.(ico|jpg|jpeg|png|gif|woff|ttf|otf|eot|svg))$
+  static_files: wordpress/\1
+  upload: wordpress/.*\.(ico|jpg|jpeg|png|gif|woff|ttf|otf|eot|svg)$
+  application_readable: true
+
+- url: /wp-includes/images/media/(.*\.(ico|jpg|jpeg|png|gif|woff|ttf|otf|eot|svg))$
+  static_files: wordpress/wp-includes/images/media/\1
+  upload: wordpress/wp-includes/images/media/.*\.(ico|jpg|jpeg|png|gif|woff|ttf|otf|eot|svg)$
+  application_readable: true
+
+- url: /wp-admin/(.+)
+  script: wordpress/wp-admin/\1
+  secure: always
+
+- url: /wp-admin/
+  script: wordpress/wp-admin/index.php
+  secure: always
+
+- url: /wp-login.php
+  script: wordpress/wp-login.php
+  secure: always
+
+- url: /wp-cron.php
+  script: wordpress/wp-cron.php
+  login: admin
+
+- url: /xmlrpc.php
+  script: wordpress/xmlrpc.php
+
+- url: /wp-(.+).php
+  script: wordpress/wp-\1.php
+
+- url: /(.+)?/?
+  script: wordpress/index.php
+
+skip_files:
+- ^(.*/)?\.zip$
+- ^(.*/)?\.bat$
+- ^(.*/)?\.sh$
+- ^(.*/)?\.md$
+- wordpress/wp-content/uploads/.*

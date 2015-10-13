@@ -1,0 +1,36 @@
+## BEGIN WordPress
+#<IfModule mod_rewrite.c>
+## redirect http to https behind elb
+#RewriteEngine On
+## Bypass ELB-Healthchecker from redirection.
+#RewriteCond %{HTTP_USER_AGENT} !^ELB-HealthChecker
+## By using HTTP:X-Forwarded-Proto does not contains HTTPS
+#RewriteCond %{HTTP:X-Forwarded-Proto} !https
+##Request forward option
+#RewriteRule !/readme.html https://%{SERVER_NAME}%{REQUEST_URI} [END,R=301]
+#
+## new config after multisite
+## RewriteEngine On
+#RewriteBase /
+#RewriteRule ^index\.php$ - [L]
+#
+## add a trailing slash to /wp-admin
+#RewriteRule ^([_0-9a-zA-Z-]+/)?wp-admin$ $1wp-admin/ [R=301,L]
+#
+#RewriteCond %{REQUEST_FILENAME} -f [OR]
+#RewriteCond %{REQUEST_FILENAME} -d
+#RewriteRule ^ - [L]
+#RewriteRule ^([_0-9a-zA-Z-]+/)?(wp-(content|admin|includes).*) $2 [L]
+#RewriteRule ^([_0-9a-zA-Z-]+/)?(.*\.php)$ $2 [L]
+#RewriteRule . index.php [L]
+#
+## original config
+##RewriteEngine On
+##RewriteBase /
+##RewriteRule ^index\.php$ - [L]
+##RewriteCond %{REQUEST_FILENAME} !-f
+##RewriteCond %{REQUEST_FILENAME} !-d
+##RewriteRule . /index.php [L]
+#</IfModule>
+#
+## END WordPress
