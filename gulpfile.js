@@ -38,7 +38,7 @@ gulp.task('clean', function() {
   del.sync([dirs.app]);
 });
 
-gulp.task('copy:config', function() {
+gulp.task('copy:config', ['clean'], function() {
   var srcDir = dirs.src;
 
   return gulp.src([
@@ -50,7 +50,7 @@ gulp.task('copy:config', function() {
     .pipe(gulp.dest(dirs.app));
 });
 
-gulp.task('copy:wp', [], function() {
+gulp.task('copy:wp', ['copy:config'], function() {
   var srcRoot = path.join(dirs.src, 'wp');
 
   return gulp.src('**/*',
@@ -73,7 +73,7 @@ gulp.task('copy:wp-overridden', ['copy:wp'], function() {
 });
 
 
-gulp.task('build', ['clean', 'copy:config', 'copy:wp-overridden'], function() {});
+gulp.task('build', ['copy:wp-overridden'], function() {});
 
 gulp.task('deploy', ['build'], function() {
   shellWrapper('appcfg.py update <%= app %>', dirs);
