@@ -12,6 +12,14 @@ handlers:
   script: wordpress/wp-admin/network/index.php
   secure: always
   
+- url: /([_0-9a-zA-Z-]+/)wp-admin/
+  script: wordpress/wp-admin/index.php
+  secure: always
+
+- url: /([_0-9a-zA-Z-]+/)wp-admin/(.+)
+  script: wordpress/wp-admin/\2
+  secure: always
+      
 - url: /([_0-9a-zA-Z-]+/)?(wp-(content|admin|includes).*\.(htm.*$|html.*$|css.*$|js.*$|ico.*$|jpg.*$|png.*$|gif.*$))
   static_files: wordpress/\2
   upload: wordpress/([_0-9a-zA-Z-]+/)?(wp-(content|admin|includes).*\.(htm.*$|html.*$|css.*$|js.*$|ico.*$|jpg.*$|png.*$|gif.*$))
