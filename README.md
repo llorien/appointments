@@ -1,7 +1,10 @@
 ## How to run locally
 
-TODO: you may fail by following this instructions, since WPMU need several
-steps. Let me polish it later.
+Basically, you need to read
+[this](http://googlecloudplatform.github.io/appengine-php-wordpress-starter-project/)
+and then
+[this](http://www.frankie.bz/blog/developers/wordpress-multisite-on-google-app-engine-php-beta)
+to get a full understanding of WPMU local installation for GAE.
 
 1. make sure the password of `root` for mysql on `localhost` is empty
 2. create a database named `brithon-appointments`
@@ -21,9 +24,6 @@ $ gulp clean
 ### build package
 
 ```shell
-$ gulp {action} [--version {version}]
+$ gulp {action}
 ```
 + {action}: gulp task names: [build | deploy].
-+ {version}: [dev | refname]. Default: dev
-  + `dev`: the working tree. So, do not use `dev` to name branch and tag.
-  + `refname`: a valide git branch (either local or remote branch) or tag name.
