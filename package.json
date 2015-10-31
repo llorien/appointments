@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "gulp build",
-    "deploy": "gulp deploy"
+    "deploy": "gulp deploy",
+    "start": "sudo dev_appserver.py --port 80 --host appointments-local.brithon.com --admin_host appointments-local.brithon.com app"
   },
   "repository": {
     "type": "git",
@@ -20,7 +21,10 @@
   "devDependencies": {
     "del": "^2.0.0",
     "gulp": "^3.9.0",
+    "gulp-if": "^2.0.0",
+    "gulp-ignore": "^2.0.1",
     "gulp-load-plugins": "^1.0.0-rc.1",
+    "gulp-template": "^3.0.0",
     "gulp-util": "^3.0.6",
     "lodash": "^3.10.1",
     "shelljs": "^0.5.3"

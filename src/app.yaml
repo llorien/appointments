@@ -1,9 +1,11 @@
-application: brithon-appointments
-version: v0-0-2
+application: brithon-<%= environment %>
+module: appointments
+version: <%= version %>
 runtime: php55
 api_version: 1
 
 handlers:
+# <begin> this part is for multi-site.
 - url: /wp-admin/network/(.+)
   script: wordpress/wp-admin/network/\1
   secure: always
@@ -24,6 +26,7 @@ handlers:
   static_files: wordpress/\2
   upload: wordpress/([_0-9a-zA-Z-]+/)?(wp-(content|admin|includes).*\.(htm.*$|html.*$|css.*$|js.*$|ico.*$|jpg.*$|png.*$|gif.*$))
   application_readable: true
+# <end>
 
 - url: /(.*\.(htm|html|css|js))$
   static_files: wordpress/\1
