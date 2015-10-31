@@ -120,6 +120,7 @@
     define('SECURE_AUTH_SALT', 'QZ~SqyXSYI:K<.-xMk++JKFa-EL8sK1^3/s,a8eq-ioOMSd3Er!_q_Rt+8F5|WW#');
     define('LOGGED_IN_SALT',   'aTss&l94tK1JOHdA1W6j,~iMtTs&Lm,59V!xEk?i%v%k#h8|FM#H[WEP.e+BzsLP');
     define('NONCE_SALT',       'KC]i`.rt>j=Mo|z2dKw}Vszn+<e~M<}Bo,*J|ZfBx%&QjIljd}dX.G1,!|>2SF>I');
+    define('WP_CACHE_KEY_SALT','XIiGa`+0C6uRgfAmT<##mwZ?QLeha*6n<r+LSM|dtI=n:bLGy_$O.g9 ul3D{g|h');
     /**#@-*/
 
     /**
