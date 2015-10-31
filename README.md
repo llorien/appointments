@@ -37,7 +37,7 @@ $ gulp {action} [--environment {environments}]
 1. Create a database named `brithon_appointments`.
 
   ```shell
-$ echo 'CREATE DATABASE brithon_appointments;' | mysql -u root
+$ echo 'CREATE DATABASE IF NOT EXISTS brithon_appointments;' | mysql -u root
   ```
 1. Download and install [Google App Engine SDK for PHP](https://cloud.google.com/appengine/downloads).
 1. Clone this repo and `cd` into the working dir.
