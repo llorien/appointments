@@ -42,12 +42,32 @@
                 define('DB_HOST', ':/cloudsql/brithon-prod:brithon-db');
                 define('DB_USER', 'root');
                 define('DB_PASSWORD', '');
+
+                // 1. uncomment this line after single site installation.
+                define('WP_ALLOW_MULTISITE', true);
+                // 2. uncomment this line after network is enabled in the browser.
+                define('MULTISITE', true);
+                define('SUBDOMAIN_INSTALL', false);
+                define('DOMAIN_CURRENT_SITE', 'appointments.brithon.com');
+                define('PATH_CURRENT_SITE', '/');
+                define('SITE_ID_CURRENT_SITE', 1);
+                define('BLOG_ID_CURRENT_SITE', 1);
                 break;
             case $appengine_app_ids['dev']:
                 define('DB_NAME', 'brithon_appointments');
                 define('DB_HOST', ':/cloudsql/brithon-dev:brithon-db');
                 define('DB_USER', 'root');
                 define('DB_PASSWORD', '');
+
+                // 1. uncomment this line after single site installation.
+                define('WP_ALLOW_MULTISITE', true);
+                // 2. uncomment this line after network is enabled in the browser.
+                define('MULTISITE', true);
+                define('SUBDOMAIN_INSTALL', false);
+                define('DOMAIN_CURRENT_SITE', 'appointments-dev.brithon.com');
+                define('PATH_CURRENT_SITE', '/');
+                define('SITE_ID_CURRENT_SITE', 1);
+                define('BLOG_ID_CURRENT_SITE', 1);
                 break;
             case $appengine_app_ids['local']:
                 // local GAE
