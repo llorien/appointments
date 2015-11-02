@@ -108,19 +108,8 @@ gulp.task('get:version', ['sanitycheck', 'clean'], function(callback) {
   callback();
 });
 
-gulp.task('copy:config:dispatch.yaml', ['get:version'], function() {
-  return gulp.src('dispatch.yaml',
-    {
-      cwd: dirs.src
-    })
-    .pipe(gPlugins.if(taskConfig.environment === 'local',
-      gPlugins.ignore.exclude('**/dispatch.yaml')))
-    .pipe(gPlugins.template(taskConfig))
-    .pipe(gulp.dest(dirs.app));
-});
-
-gulp.task('copy:config:app.yaml', ['copy:config:dispatch.yaml'], function() {
-  return gulp.src('app.yaml',
+gulp.task('copy:config', ['get:version'], function() {
+  return gulp.src(['app.yaml', 'cron.yaml', 'php.ini'],
     {
       cwd: dirs.src
     })
@@ -128,16 +117,7 @@ gulp.task('copy:config:app.yaml', ['copy:config:dispatch.yaml'], function() {
     .pipe(gulp.dest(dirs.app));
 });
 
-gulp.task('copy:config:other', ['copy:config:app.yaml'], function() {
-  return gulp.src([
-    'cron.yaml', 'php.ini'
-  ], {
-    cwd: dirs.src
-  })
-    .pipe(gulp.dest(dirs.app));
-});
-
-gulp.task('copy:wp', ['copy:config:other'], function() {
+gulp.task('copy:wp', ['copy:config'], function() {
   var srcRoot = path.join(dirs.src, 'wp');
 
   return gulp.src('**/*',

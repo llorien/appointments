@@ -21,8 +21,6 @@
   "devDependencies": {
     "del": "^2.0.0",
     "gulp": "^3.9.0",
-    "gulp-if": "^2.0.0",
-    "gulp-ignore": "^2.0.1",
     "gulp-load-plugins": "^1.0.0-rc.1",
     "gulp-template": "^3.0.0",
     "gulp-util": "^3.0.6",
