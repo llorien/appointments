@@ -21,7 +21,15 @@ handlers:
 - url: /([_0-9a-zA-Z-]+/)wp-admin/(.+)
   script: wordpress/wp-admin/\2
   secure: always
-      
+
+- url: /([_0-9a-zA-Z-]+/)wp-cron.php
+  script: wordpress/wp-cron.php
+  login: admin
+
+- url: /([_0-9a-zA-Z-]+/)wp-(.+).php
+  script: wordpress/wp-\2.php
+  secure: always
+
 - url: /([_0-9a-zA-Z-]+/)?(wp-(content|admin|includes).*\.(htm.*$|html.*$|css.*$|js.*$|ico.*$|jpg.*$|png.*$|gif.*$))
   static_files: wordpress/\2
   upload: wordpress/([_0-9a-zA-Z-]+/)?(wp-(content|admin|includes).*\.(htm.*$|html.*$|css.*$|js.*$|ico.*$|jpg.*$|png.*$|gif.*$))
