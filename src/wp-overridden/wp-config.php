@@ -43,6 +43,9 @@
                 define('DB_USER', 'root');
                 define('DB_PASSWORD', '');
 
+                define('WP_DEBUG', false);
+                define('DISABLE_WP_CRON', true);
+
                 // 1. uncomment this line after single site installation.
                 define('WP_ALLOW_MULTISITE', true);
                 // 2. uncomment this line after network is enabled in the browser.
@@ -58,6 +61,9 @@
                 define('DB_HOST', ':/cloudsql/brithon-dev:brithon-db');
                 define('DB_USER', 'root');
                 define('DB_PASSWORD', '');
+
+                define('WP_DEBUG', true);
+                define('DISABLE_WP_CRON', true);
 
                 // 1. uncomment this line after single site installation.
                 define('WP_ALLOW_MULTISITE', true);
@@ -75,6 +81,9 @@
                 define('DB_HOST', '127.0.0.1');
                 define('DB_USER', 'root');
                 define('DB_PASSWORD', '');
+
+                define('WP_DEBUG', true);
+                define('DISABLE_WP_CRON', true);
 
                 // 1. uncomment this line after single site installation.
                 define('WP_ALLOW_MULTISITE', true);
@@ -95,6 +104,8 @@
         define('DB_HOST', '127.0.0.1');
         define('DB_USER', 'root');
         define('DB_PASSWORD', '');
+
+        define('WP_DEBUG', true);
 
         // 1. uncomment this line after single site installation.
         define('WP_ALLOW_MULTISITE', true);
@@ -168,12 +179,12 @@
      * It is strongly recommended that plugin and theme developers use WP_DEBUG
      * in their development environments.
      */
-    define('WP_DEBUG', true);
+     // <brithon> please set it for different envs.
 
     /**
      * Disable default wp-cron in favor of a real cron job
      */
-    define('DISABLE_WP_CRON', true);
+     // <brithon> please set it for different envs.
     
     /* That's all, stop editing! Happy blogging. */
 
