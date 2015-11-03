@@ -15,34 +15,93 @@
      */
 
     // Required for batcache use
-    //define('WP_CACHE', true);
+    // define('WP_CACHE', true);
+    // configures batcache
+    // $batcache = [
+    //   'seconds'=>0,
+    //   'max_age'=>30*60, // 30 minutes
+    //   'debug'=>false
+    // ];
 
-    // ** MySQL settings - You can get this info from your web host ** //
-    /** The name of the database for WordPress */
-    define('DB_NAME', 'brithon_appointments');
+    $appengine_app_ids = array(
+        'prod' => 'brithon-prod',
+        'dev' => 'brithon-dev',
+        'local' => 'brithon-local'
+    );
 
-    if (isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'],'Google App Engine') !== false) {
-        /** Live environment Cloud SQL login and SITE_URL info */
-        /** Note that from App Engine, the password is not required, so leave it blank here */
-        define('DB_HOST', ':/cloudsql/brithon-1069:brithon-com');
-        define('DB_USER', 'root');
-        define('DB_PASSWORD', '');
+    use \google\appengine\api\app_identity\AppIdentityService;
+    // running on appengine
+    if (isset($_SERVER['APPLICATION_ID'])) {
+        $application_id = AppIdentityService::getApplicationId();
 
-        define('MULTISITE', true);
-        define('SUBDOMAIN_INSTALL', false);
-        define('DOMAIN_CURRENT_SITE', 'appointments-dev.brithon.com');
-        define('PATH_CURRENT_SITE', '/');
-        define('SITE_ID_CURRENT_SITE', 1);
-        define('BLOG_ID_CURRENT_SITE', 1); 
+        // online GAE
+        switch ($application_id) {
+            case $appengine_app_ids['prod']:
+                /** Live environment Cloud SQL login info */
+                define('DB_NAME', 'brithon_appointments');
+                define('DB_HOST', ':/cloudsql/brithon-prod:brithon-db');
+                define('DB_USER', 'root');
+                define('DB_PASSWORD', '');
+
+                // 1. uncomment this line after single site installation.
+                define('WP_ALLOW_MULTISITE', true);
+                // 2. uncomment this line after network is enabled in the browser.
+                define('MULTISITE', true);
+                define('SUBDOMAIN_INSTALL', false);
+                define('DOMAIN_CURRENT_SITE', 'appointments.brithon.com');
+                define('PATH_CURRENT_SITE', '/');
+                define('SITE_ID_CURRENT_SITE', 1);
+                define('BLOG_ID_CURRENT_SITE', 1);
+                break;
+            case $appengine_app_ids['dev']:
+                define('DB_NAME', 'brithon_appointments');
+                define('DB_HOST', ':/cloudsql/brithon-dev:brithon-db');
+                define('DB_USER', 'root');
+                define('DB_PASSWORD', '');
+
+                // 1. uncomment this line after single site installation.
+                define('WP_ALLOW_MULTISITE', true);
+                // 2. uncomment this line after network is enabled in the browser.
+                define('MULTISITE', true);
+                define('SUBDOMAIN_INSTALL', false);
+                define('DOMAIN_CURRENT_SITE', 'appointments-dev.brithon.com');
+                define('PATH_CURRENT_SITE', '/');
+                define('SITE_ID_CURRENT_SITE', 1);
+                define('BLOG_ID_CURRENT_SITE', 1);
+                break;
+            case $appengine_app_ids['local']:
+                // local GAE
+                define('DB_NAME', 'brithon_appointments');
+                define('DB_HOST', '127.0.0.1');
+                define('DB_USER', 'root');
+                define('DB_PASSWORD', '');
+
+                // 1. uncomment this line after single site installation.
+                define('WP_ALLOW_MULTISITE', true);
+                // 2. uncomment this line after network is enabled in the browser.
+                define('MULTISITE', true);
+                define('SUBDOMAIN_INSTALL', false);
+                define('DOMAIN_CURRENT_SITE', 'appointments-local.brithon.com');
+                define('PATH_CURRENT_SITE', '/');
+                define('SITE_ID_CURRENT_SITE', 1);
+                define('BLOG_ID_CURRENT_SITE', 1);
+                break;
+            default:
+                die('Unrecognized application_id: ' . $application_id);
+        }
     } else {
-        /** Local environment MySQL login info */
+        // running without GAE
+        define('DB_NAME', 'brithon_appointments');
         define('DB_HOST', '127.0.0.1');
         define('DB_USER', 'root');
         define('DB_PASSWORD', '');
 
+        // 1. uncomment this line after single site installation.
+        define('WP_ALLOW_MULTISITE', true);
+        // 2. uncomment this line after network is enabled in the browser.
         define('MULTISITE', true);
         define('SUBDOMAIN_INSTALL', false);
-        define('DOMAIN_CURRENT_SITE', 'localhost');
+        define('DOMAIN_CURRENT_SITE', 'appointments-local.brithon.com');
         define('PATH_CURRENT_SITE', '/');
         define('SITE_ID_CURRENT_SITE', 1);
         define('BLOG_ID_CURRENT_SITE', 1);
@@ -73,14 +132,15 @@
      *
      * @since 2.6.0
      */
-    define('AUTH_KEY',         'm&L>]!p`62vI6B=u$zv`G$x[k0hT-6!nS-Tb/Nnft8Poma7uMvuA~J|yh[S:(-EI');
-    define('SECURE_AUTH_KEY',  'dY_xLg)^N1xpc4oG,TU-gv,Zpnc+Jty>oRX]:2]kS%TBM]}?B(cC2*_KT7xTg3~f');
-    define('LOGGED_IN_KEY',    '[ixdm6$ZG2l[@x &6qF+XzRkJAIb4v&!4:q1ebV%9r`x6#q/q3:mj2up_amSX iK');
-    define('NONCE_KEY',        'rAkGdC+ rT2M,00k2~|C^,k&m4xXf5C5V3(A_>:yn=V %G9[irLajs<fI>LJ>fWO');
-    define('AUTH_SALT',        'uB[kbO)2`h$Da,4qOD|EjAc8e<bq<Zc5[E_,>u]$%8#&1L+#qr8%:=?foH[(YY&+');
-    define('SECURE_AUTH_SALT', '1-ugi-,u[pTdkkd+g)H-q/lX}kvf|fLmZ`+@IrO~),9Yzp4+dZM$KKD]U4Fj@45<');
-    define('LOGGED_IN_SALT',   '<[|(3JF#HJ1$GW1|M*mdYMPs;TQ2#=:-11Y)doP(91|m:uR.:[yVq]-XUpp0?>H9');
-    define('NONCE_SALT',       'G(iF[[kd1U(U=Re2VJb`lO~t!XX$huUC+6-44M&$)ArI9#{b9DTf{V^Q:+9:9,NA');
+    define('AUTH_KEY',         'ZdJi)zW5zdcgbK?QMO mb${z(q{TY>x~5Wt~+-+<,=q_Y2Zw++pz%1m&{hTf;):H');
+    define('SECURE_AUTH_KEY',  'pgIV|CY?yR]^==>fi>p.O]8Rj$6Mw]t=#m9]u(@} X!$=cA[=T|tbdU f]Wc`ZP8');
+    define('LOGGED_IN_KEY',    '$d8W-{u;{bikqJ8LyhGFsqRX,!2I}>-~u(o-r#lT_w=}EH_5Z9T/Act#]|a,Afo|');
+    define('NONCE_KEY',        ':*DI/-|r22p6##_W`3w0F`UqK.*F/I:t1wv&AKu534D~Z14qOl;,]LmQz=+t|]~:');
+    define('AUTH_SALT',        '@i,9i(M uA:(iMg$hW@yIm179|@y=.X8n3wB?`b5zF+o=/(Ox8vGI q+p:sqt+F>');
+    define('SECURE_AUTH_SALT', 'QZ~SqyXSYI:K<.-xMk++JKFa-EL8sK1^3/s,a8eq-ioOMSd3Er!_q_Rt+8F5|WW#');
+    define('LOGGED_IN_SALT',   'aTss&l94tK1JOHdA1W6j,~iMtTs&Lm,59V!xEk?i%v%k#h8|FM#H[WEP.e+BzsLP');
+    define('NONCE_SALT',       'KC]i`.rt>j=Mo|z2dKw}Vszn+<e~M<}Bo,*J|ZfBx%&QjIljd}dX.G1,!|>2SF>I');
+    define('WP_CACHE_KEY_SALT','XIiGa`+0C6uRgfAmT<##mwZ?QLeha*6n<r+LSM|dtI=n:bLGy_$O.g9 ul3D{g|h');
     /**#@-*/
 
     /**
@@ -109,20 +169,12 @@
      * in their development environments.
      */
     define('WP_DEBUG', true);
-    
+
     /**
      * Disable default wp-cron in favor of a real cron job
      */
     define('DISABLE_WP_CRON', true);
     
-    // configures batcache
-    $batcache = [
-      'seconds'=>0,
-      'max_age'=>30*60, // 30 minutes
-      'debug'=>false
-    ];
-
-    define('WP_ALLOW_MULTISITE', true);
     /* That's all, stop editing! Happy blogging. */
 
     /** Absolute path to the WordPress directory. */
