@@ -43,15 +43,20 @@
                 define('DB_USER', 'root');
                 define('DB_PASSWORD', '');
 
+                define('WP_DEBUG', false);
+                define('DISABLE_WP_CRON', true);
+
                 // 1. uncomment this line after single site installation.
                 define('WP_ALLOW_MULTISITE', true);
-                // 2. uncomment this line after network is enabled in the browser.
+
+                // 2. uncomment this section after network is enabled in the browser.
                 define('MULTISITE', true);
                 define('SUBDOMAIN_INSTALL', false);
                 define('DOMAIN_CURRENT_SITE', 'appointments.brithon.com');
                 define('PATH_CURRENT_SITE', '/');
                 define('SITE_ID_CURRENT_SITE', 1);
                 define('BLOG_ID_CURRENT_SITE', 1);
+
                 break;
             case $appengine_app_ids['dev']:
                 define('DB_NAME', 'brithon_appointments');
@@ -59,15 +64,20 @@
                 define('DB_USER', 'root');
                 define('DB_PASSWORD', '');
 
+                define('WP_DEBUG', true);
+                define('DISABLE_WP_CRON', true);
+
                 // 1. uncomment this line after single site installation.
                 define('WP_ALLOW_MULTISITE', true);
-                // 2. uncomment this line after network is enabled in the browser.
+
+                // 2. uncomment this section after network is enabled in the browser.
                 define('MULTISITE', true);
                 define('SUBDOMAIN_INSTALL', false);
                 define('DOMAIN_CURRENT_SITE', 'appointments-dev.brithon.com');
                 define('PATH_CURRENT_SITE', '/');
                 define('SITE_ID_CURRENT_SITE', 1);
                 define('BLOG_ID_CURRENT_SITE', 1);
+
                 break;
             case $appengine_app_ids['local']:
                 // local GAE
@@ -76,15 +86,20 @@
                 define('DB_USER', 'root');
                 define('DB_PASSWORD', '');
 
+                define('WP_DEBUG', true);
+                define('DISABLE_WP_CRON', true);
+
                 // 1. uncomment this line after single site installation.
                 define('WP_ALLOW_MULTISITE', true);
-                // 2. uncomment this line after network is enabled in the browser.
+
+                // 2. uncomment this section after network is enabled in the browser.
                 define('MULTISITE', true);
                 define('SUBDOMAIN_INSTALL', false);
                 define('DOMAIN_CURRENT_SITE', 'appointments-local.brithon.com');
                 define('PATH_CURRENT_SITE', '/');
                 define('SITE_ID_CURRENT_SITE', 1);
                 define('BLOG_ID_CURRENT_SITE', 1);
+
                 break;
             default:
                 die('Unrecognized application_id: ' . $application_id);
@@ -96,9 +111,12 @@
         define('DB_USER', 'root');
         define('DB_PASSWORD', '');
 
+        define('WP_DEBUG', true);
+
         // 1. uncomment this line after single site installation.
         define('WP_ALLOW_MULTISITE', true);
-        // 2. uncomment this line after network is enabled in the browser.
+
+        // 2. uncomment this section after network is enabled in the browser.
         define('MULTISITE', true);
         define('SUBDOMAIN_INSTALL', false);
         define('DOMAIN_CURRENT_SITE', 'appointments-local.brithon.com');
@@ -168,12 +186,12 @@
      * It is strongly recommended that plugin and theme developers use WP_DEBUG
      * in their development environments.
      */
-    define('WP_DEBUG', true);
+     // <brithon> please set it for different envs.
 
     /**
      * Disable default wp-cron in favor of a real cron job
      */
-    define('DISABLE_WP_CRON', true);
+     // <brithon> please set it for different envs.
     
     /* That's all, stop editing! Happy blogging. */
 
