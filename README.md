@@ -44,5 +44,6 @@ $ echo 'CREATE DATABASE IF NOT EXISTS brithon_appointments;' | mysql -u root
 1. Run `npm install`.
 1. Run `gulp build` and the `app` dir will be created.
 1. Read [this](http://googlecloudplatform.github.io/appengine-php-wordpress-starter-project/) and then [this](http://www.frankie.bz/blog/developers/wordpress-multisite-on-google-app-engine-php-beta) to get a full understanding of WPMU local installation for GAE.
+   - You have to first comment out mark 1 and 2 at first, and then uncomment them during the installation.
 1. Start the service with `npm start`.
 1. Visit `http://appointments-local.brithon.com` to go through the wp installation.
