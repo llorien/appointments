@@ -47,7 +47,7 @@ $ echo 'CREATE DATABASE IF NOT EXISTS brithon_appointments;' | mysql -u root
    1. Comment out section 1 and 2;
    2. Install single site first;
       1. Start the service with `npm start`.
-      2. Visit `http://appointments-local.brithon.com` to go through the wp installation.
+      2. Visit http://appointments-local.brithon.com to go through the wp installation.
    3. Uncomment section 1;
    4. Log into the admin dashboard and create network
       1. Menu: `Tools-->Network`
