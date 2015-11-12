@@ -6,7 +6,7 @@
   "scripts": {
     "build": "gulp build",
     "deploy": "gulp deploy",
-    "start": "sudo dev_appserver.py --port 80 --host appointments-local.brithon.com --admin_port 8001 --admin_host appointments-local.brithon.com app --skip_sdk_update_check"
+    "start": "sudo dev_appserver.py --port 80 --host appointments-local.brithon.com --admin_port 8001 --admin_host appointments-local.brithon.com app"
   },
   "repository": {
     "type": "git",
