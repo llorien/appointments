@@ -10,7 +10,7 @@ const del = require('del');
 
 const _ = require('lodash');
 
-let environments = {
+const environments = {
   dev: {
     url_suffix: '-dev'
   },
