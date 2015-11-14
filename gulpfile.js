@@ -68,12 +68,13 @@ function getVersion() {
   taskConfig.version = normalizeVersion(taskConfig.version);
 }
 
-gulp.task('default', function() {
+gulp.task('default', function(callback) {
   fs.readFile('README.md', 'utf8', function(err, data) {
     if (err) {
       throw err;
     }
     console.log(data);
+    callback();
   });
 });
 
@@ -109,7 +110,12 @@ gulp.task('get:version', ['sanitycheck', 'clean'], function(callback) {
 });
 
 gulp.task('copy:config', ['get:version'], function() {
-  return gulp.src(['app.yaml', 'cron.yaml', 'php.ini'],
+  let configs = ['app.yaml'];
+
+  if (taskConfig.environment === 'local') {
+    configs.push('cron.yaml', 'queue.yaml', 'php.ini');
+  }
+  return gulp.src(configs,
     {
       cwd: dirs.src
     })

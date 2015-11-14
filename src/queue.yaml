@@ -1,0 +1,9 @@
+total_storage_limit: 128M
+queue:
+- name: default
+  rate: 5/s
+- name: appointments
+  rate: 40/s
+  bucket_size: 40
+  max_concurrent_requests: 20
+  target: appointments
